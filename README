@@ -1,0 +1,3 @@
+# rflib
+
+Buffer-based, zero-copy DSP library for SDR, written in C99

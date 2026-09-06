@@ -1,0 +1,54 @@
+CONTRIBUTING                                                                (1)
+# CONTRIBUTING
+
+In order to extend this library, we must follow some rules;
+
+This document outlines the rules, workflows, and standards required to
+maintain the library's high-performance, zero-copy, and FFI-first
+architecture.
+
+## Core Principles
+
+iolating these will result in immediate rejection of your contribution.
+
+1. Pure C99. No C++, no C++ exceptions, no C++ templates.
+   The ABI must remain stable for C, C++, Python, and Lua.
+
+2. Zero-Copy Hot Path. execute() function of any DSP block must never call 
+   malloc, free, realloc, or any other memory allocation function. 
+   Memory is allocated once in create() and freed in destroy().
+   
+3. Explicit FFI: All functions must return only scalar types 
+   rflib_status_t, size_t, float). Data flows via pointer arguments with
+   explicit length parameters. No variadic functions (...) are allowed.
+
+## Getting Started
+
+#### Prerequisites
+
+    Compiler: GCC 9+, Clang 10+, or MSVC 2019+ (C99 mode).
+    Build System: CMake 3.14+.
+    Language: C99 (strictly).
+    Testing: Python 3.9+ (with numpy, cffi) and LuaJIT 2.1+ (optional but
+    recommended for FFI testing).
+    Reference Tools: SciPy (for filter validation), Valgrind (Linux), 
+    AddressSanitizer (all platforms).
+
+## Environment Setup
+
+```bash
+
+# Clone the repository
+$ git clone https://github.com/nflatrea/rflib.git
+$ cd rflib
+
+# Create build directory
+$ mkdir build && cd build
+
+# Configure (Monolithic build)
+$ cmake -DCMAKE_BUILD_TYPE=Debug -DRFLIB_BUILD_TESTS=ON ..
+
+# Build
+$ cmake --build . -j$(nproc)
+
+```

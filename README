@@ -1,3 +1,45 @@
-# rflib
+README                                                                      (1)
 
-Buffer-based, zero-copy DSP library for SDR, written in C99
+
+								    rflib								    
+          Buffer-based, zero-copy DSP library for SDR, written in C99
+
+
+## Build
+
+No CMake, no config flags to learn. One Makefile:
+
+```sh
+make          # builds librflib.so and librflib.a
+```
+
+If you need different flags, edit `Makefile`. 
+`CC` and `CFLAGS` can also be overridden  on the command line
+(`make CC=clang`).
+
+## Use it from C
+
+```c
+#include "rflib/rflib.h"
+
+rflib_complex taps[256];
+size_t n = rflib_taps_lowpass(0.1f, 0.05f, 60.0f, taps, 256);
+
+rflib_fir filter = rflib_fir_create(taps, n);
+rflib_fir_execute(filter, in_buf, out_buf, len);   // zero allocations
+rflib_fir_destroy(filter);
+...
+```
+
+## For anyone extending this
+
+In order to extend this library, we must follow some rules;
+
+1. Use pure C99. no C++.
+2. Every function returns rflib_status_t, size_t, or float; 
+   buffers are pointer + explicit size_t len arguments, never implicit.
+3. No variadic functions.
+4. create() allocates; execute() never allocates; destroy() frees.
+5. rflib_complex_t is the only struct passed by value across the ABI.
+
+See CONTRIBUTING for more information.

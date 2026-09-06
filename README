@@ -4,7 +4,7 @@ Buffer-based, zero-copy DSP library for SDR, written in C99
 
 ## Build
 
-No CMake, no config flags to learn. One Makefile:
+No CMake, no config. One Makefile:
 
 ```sh
 make          # builds librflib.so and librflib.a

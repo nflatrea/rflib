@@ -1,9 +1,6 @@
-README                                                                      (1)
+# rflib								    
 
-
-								    rflib								    
-          Buffer-based, zero-copy DSP library for SDR, written in C99
-
+Buffer-based, zero-copy DSP library for SDR, written in C99
 
 ## Build
 
